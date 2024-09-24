@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vamos Sair Hoje?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .input-container {
+            display: flex;
+            gap: 30px; /* Diminui o espaço entre os botões */
+            margin-top: 20px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+        }
+        .nao {
+            position: relative; /* Remove posição absoluta para manter o alinhamento */
+        }
+        .message {
+            margin-top: 20px; /* Espaço para a mensagem */
+            font-size: 1.2em; /* Tamanho da fonte da mensagem */
+            color: #28a745; /* Cor verde para a mensagem */
+        }
+        .message-2 {
+            margin-top: 10px; /* Espaço para a segunda mensagem */
+            font-size: 1.2em; /* Tamanho da fonte da segunda mensagem */
+            color: #dc3545; /* Cor vermelha para a segunda mensagem */
+            display: none; /* Inicialmente escondida */
+        }
+    </style>
+</head>
+<body>
+    <h1>Vamos sair hoje?</h1>
+    
+    <div class="input-container">
+        <label>
+            <input type="radio" name="resposta" value="sim" id="simBtn"> Sim
+        </label>
+        
+        <label class="nao">
+            <input type="radio" name="resposta" value="nao" id="naoBtn"> Não
+        </label>
+    </div>
+
+    <div class="message" id="message" style="display: none;"></div>
+    <div class="message-2" id="message2"></div> <!-- Segunda mensagem -->
+
+    <script>
+        const naoBtn = document.getElementById('naoBtn');
+        const naoLabel = document.querySelector('.nao');
+        const simBtn = document.getElementById('simBtn');
+        const message = document.getElementById('message');
+        const message2 = document.getElementById('message2'); // Referência para a segunda mensagem
+
+        naoBtn.addEventListener('mouseenter', () => {
+            const x = Math.random() * (window.innerWidth - naoLabel.offsetWidth);
+            const y = Math.random() * (window.innerHeight - naoLabel.offsetHeight);
+            naoLabel.style.position = 'absolute'; /* Torna o botão "Não" móvel apenas quando necessário */
+            naoLabel.style.left = `${x}px`;
+            naoLabel.style.top = `${y}px`;
+        });
+
+        // Adiciona o evento de clique ao botão "Sim"
+        simBtn.addEventListener('click', () => {
+            message.textContent = "Escolheu bem"; // Define o texto da mensagem
+            message.style.display = 'block'; // Exibe a mensagem
+
+            // Define um timeout para mostrar a segunda mensagem após 5 segundos
+            setTimeout(() => {
+                message2.textContent = "AAAAAAAAA"; // Define o texto da segunda mensagem
+                message2.style.display = 'block'; // Exibe a segunda mensagem
+            }, 5000); // 5000 milissegundos = 5 segundos
+        });
+    </script>
+</body>
+</html>
+
+
