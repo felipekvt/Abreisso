@@ -1,93 +1,133 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bqt supresa hoje?</title>
+    <title>Há quanto tempo eu te amo?</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            background-color: #f0f0f0;
-            flex-direction: column;
+            padding: 0;
+            text-align: center;
+            background: url('https://source.unsplash.com/1600x900/?love,romance') no-repeat center center/cover;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: 100px auto;
+            position: relative;
+            z-index: 1;
         }
         h1 {
-            color: #333;
-            margin-bottom: 30px;
+            font-size: 2em;
+            color: #ff4c7f;
+            margin-bottom: 10px;
         }
-        .input-container {
-            display: flex;
-            gap: 30px; /* Diminui o espaço entre os botões */
+        h2 {
+            font-size: 1.2em;
+            color: #ff4c7f;
             margin-top: 20px;
         }
-        label {
-            display: flex;
-            align-items: center;
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 5s infinite ease-in-out;
         }
-        .nao {
-            position: relative; /* Remove posição absoluta para manter o alinhamento */
+        .heart:before, .heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
         }
-        .message {
-            margin-top: 20px; /* Espaço para a mensagem */
-            font-size: 1.2em; /* Tamanho da fonte da mensagem */
-            color: #28a745; /* Cor verde para a mensagem */
+        .heart:before {
+            top: -10px;
+            left: 0;
         }
-        .message-2 {
-            margin-top: 10px; /* Espaço para a segunda mensagem */
-            font-size: 1.2em; /* Tamanho da fonte da segunda mensagem */
-            color: #dc3545; /* Cor vermelha para a segunda mensagem */
-            display: none; /* Inicialmente escondida */
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Bqt supresa hoje?</h1>
-    
-    <div class="input-container">
-        <label>
-            <input type="radio" name="resposta" value="sim" id="simBtn"> Sim
-        </label>
-        
-        <label class="nao">
-            <input type="radio" name="resposta" value="nao" id="naoBtn"> Não
-        </label>
+    <div class="container">
+        <h1>Há quanto tempo eu te amo?</h1>
+        <h2 id="resultado"></h2>
     </div>
 
-    <div class="message" id="message" style="display: none;"></div>
-    <div class="message-2" id="message2"></div> <!-- Segunda mensagem -->
-
     <script>
-        const naoBtn = document.getElementById('naoBtn');
-        const naoLabel = document.querySelector('.nao');
-        const simBtn = document.getElementById('simBtn');
-        const message = document.getElementById('message');
-        const message2 = document.getElementById('message2'); // Referência para a segunda mensagem
+        // Data de início do amor (01 de agosto de 2024)
+        const dataInicio = new Date('2024-08-01T00:00:00');
 
-        naoBtn.addEventListener('mouseenter', () => {
-            const x = Math.random() * (window.innerWidth - naoLabel.offsetWidth);
-            const y = Math.random() * (window.innerHeight - naoLabel.offsetHeight);
-            naoLabel.style.position = 'absolute'; /* Torna o botão "Não" móvel apenas quando necessário */
-            naoLabel.style.left = `${x}px`;
-            naoLabel.style.top = `${y}px`;
-        });
+        function atualizarTempo() {
+            const agora = new Date();
+            const diff = agora - dataInicio;
 
-        // Adiciona o evento de clique ao botão "Sim"
-        simBtn.addEventListener('click', () => {
-            message.textContent = "Escolheu bem, gatinha"; // Define o texto da mensagem
-            message.style.display = 'block'; // Exibe a mensagem
+            // Verifica se a data de início é no futuro
+            if (diff < 0) {
+                document.getElementById("resultado").innerHTML = 
+                    `Felipe e Jennifer ainda não começaram sua jornada de amor. <br>
+                    Aguarde até 01 de agosto de 2024!❤️`;
+                return;
+            }
 
-            // Define um timeout para mostrar a segunda mensagem após 5 segundos
-            setTimeout(() => {
-                message2.textContent = "QUE SAUDADESSS"; // Define o texto da segunda mensagem
-                message2.style.display = 'block'; // Exibe a segunda mensagem
-            }, 5000); // 5000 milissegundos = 5 segundos
-        });
+            // Calcula o tempo
+            const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            const meses = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const dias = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Exibe o resultado
+            document.getElementById("resultado").innerHTML = 
+                `Felipe e Jennifer estão juntos há: <br>
+                ${anos} anos, ${meses} meses, ${dias} dias, <br>
+                ${horas} horas, ${minutos} minutos e ${segundos} segundos. <br>
+                E o amor só cresce a cada dia! ❤️`;
+        }
+
+        // Atualiza o tempo a cada segundo
+        atualizarTempo();
+        setInterval(atualizarTempo, 1000);
+
+        // Função para criar corações flutuantes
+        function criarCorações() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                document.body.appendChild(heart);
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+
+        criarCorações();
     </script>
 </body>
 </html>
-
-
